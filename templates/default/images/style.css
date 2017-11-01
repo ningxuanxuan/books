@@ -1,0 +1,272 @@
+/*images/default/*/
+body {
+    background-image:url(bg.jpg);
+	background-color:#ECF5FF;
+    line-height:1.666em;
+    font-size:12.5px;
+    font-family: verdana, Helvetica, Arial, sans-serif; 
+	color:#333;
+    
+    }
+a{
+    color: #0E437C; 
+    text-decoration: none;
+    font-size:16px;
+}
+
+a:focus, a:hover { text-decoration: underline }
+.login{
+    font-size:15px;
+    font-weight:bold;
+	color:#0066FF;
+}
+table.login{
+    background:#fff;
+    width:450px;
+    height:140px;
+    margin:auto;
+    margin-top:200px;
+    border:1px solid #cccccc;
+    padding-bottom:20px
+    }
+table.login tr{
+    text-align:center;
+    background:#fff;
+    height:70px;
+    }
+    
+input.login{
+    height:30px;
+    width:300px;
+    border:#0066FF 1px solid;
+    font-size:25px;
+    color:#0066FF;
+}
+ table{
+    border:0px solid #cccccc;
+    width:70%;
+    text-align:center;
+    border-collapse: collapse;
+    }
+ table th{
+    background:#FFC1C1;
+    border:1px;
+    }
+ table tr{
+    background:#B4EEB4;
+    border:1px;
+    }
+table td{
+    border:1px;
+}
+
+.btn-login{
+	width:102px;
+	background-position:0 -208px;
+	color:#555;
+}
+
+.btn-reset{
+    width:102px;
+	background-position:-112px -208px;
+	color:#555;
+	margin-left:70px;
+}
+
+.btn{
+	float:left;
+	height:35px;
+	text-align:center;
+	cursor:pointer;
+	border:0px;
+	padding:0px;
+	font-weight:700;
+	font-size:14px;
+	display:inline-block;
+	vertical-align:35px;
+	outline:0;
+}
+ table.showlist{
+    width:700px;
+    empty-cells:show; 
+    border-collapse: collapse;
+    margin:2px;
+    border:1px solid #cad9ea;
+    color:#666;
+}
+table.showlist tr{
+    border:1px #ff0000 solid;
+    margin:0px;
+    padding:0px;
+}
+table.showlist th{
+    background:#BDB76B;
+    padding:0px;
+    border:1px solid #cad9ea;
+    padding:0 1em 0;
+}
+
+table.showlist td{
+    background:#FFFACD; 
+    border:1px #cad9ea solid;
+    padding:0px;    
+}
+
+div.body{
+    width:1001px;
+    margin:auto;
+    padding:0px;
+}
+div.menu_block{
+    border:1px #cccccc solid;
+    margin-left: 10px;
+    margin-top: 10px;
+    float:left;
+    width:180px;
+    height:500px;
+    text-align:center;
+    padding:0px;
+}
+
+div.content_block{
+    width:770px;
+    height:800px;
+    padding:0px;
+    margin-top:16px;
+    margin-left:200px;
+    border:1px #ccc solid;
+	
+}
+
+div.bottom_block{
+    text-align:center;
+}
+
+div.header_block{
+    height:70px;
+    padding:0px;
+    margin:10px;
+}
+div.nav_block{
+    border: 1px solid #e78f08;
+    background-color: #f6a828;
+    color:#ffffff;
+    font-weight:bold;
+    height:30px;
+    margin-top:0px;
+    margin-bottom:10px;
+    padding:0px;
+}
+.nav_block a{
+    color:#ffffff;
+}
+div#tabs{
+    margin:0px;
+}
+
+.nav_block ul{
+    margin:0px;
+    margin-top:3px;
+    padding:0px;
+    list-style:none;
+}
+
+.nav_block li{
+    height:20px;
+    margin-left:10px;
+    margin-top:3px;
+    float:left;
+}
+.clear{
+    clear:both;
+}
+hr{
+    width:970px;
+    size:1px;
+
+}
+.form_area{
+    width:650px;
+    margin:auto;
+    margin-top:30px;
+    text-align:center;
+}
+
+table.form_table{
+    margin:auto;
+    width:620px;
+    text-align:center;
+}
+
+table.form_table td{
+    background:#FAFAD2;
+    empty-cells:show; 
+    border-collapse: collapse;
+}
+.form_area tr{
+    height:60px;
+}
+
+input.form_text{
+    height:22px;
+    width:260px;
+    font-size:18px;
+}
+.form_select{
+    height:25px;
+    width:260px;
+    font-size:18px;
+}
+.form_textarea{
+    height:100px;
+    width:260px;
+    font-size:18px;
+}
+input.form_button{
+    width:80px;
+    height:30px;
+}
+
+#navtab ul{
+    list-style-type:none;
+    border: 1px solid #e78f08;
+    background-color: #f6a828;
+    font-weight:bold;
+    height:40px;
+    margin-top:5px;
+    margin-bottom:10px;
+    padding:0px;
+}
+
+#navtab li{
+	float:left;
+	display:inline;
+	margin:0px;
+    background:url("images/norm_right.gif") no-repeat;
+	border: 1px solid #e78f08;
+	background-color: #ffffff;
+	height:40px;
+}
+#navtab li a{
+	display:block;
+	color:#ffff00;
+}
+
+aaa
+{
+    
+}
+/*span.button{
+    background-color: rgb(246, 168, 40);
+    cursor:pointer;
+    display:block;
+    padding:4.4px 11px 4.4px 11px;
+    text-align: center;
+    width:100px;
+    
+}
+span.button a{
+    color:#CCCCCC;
+    text-decoration:none;
+    cursor:point;
+}*/
