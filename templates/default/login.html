@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="{$theme_root}/css/login.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<title>登录</title>
+</head>
+	
+<body>
+<div class="container">
+	<form method="post" action="login.php" class="form-signin">
+
+    <h3 class="form-signin-heading">登录</h3>
+
+		<label for="username" class="sr-only">用户名</label>
+		<input id="username" name="username" type="username"  class="form-control" placeholder="用户名" required autofocus/>
+
+
+		<label for="password" class="sr-only">密码：</label>
+		<input  id="password" name="password" type="password"  class="form-control" placeholder="密码" required/>
+	
+		<input type="hidden" name="act" value="check_login" />
+		<input type="hidden" name="refer" value="{$refer}" />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+	</form>
+	</div>
+{literal}
+<script type="text/javascript">
+$(":input:first").focus();
+</script>
+{/literal}
+<title>登录</title>
+</body>
+</html>

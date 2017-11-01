@@ -23,6 +23,14 @@ define('ROOT_PATH', str_replace('libs/init.php', '', str_replace('\\', '/', __FI
 
 //载入配置
 require_once(ROOT_PATH . 'data/config.php');
+require_once (ROOT_PATH . 'libs/libbase.php');
+
+session_start();
+//SSL 跳转
+if( $config['force_ssl'] && empty($_SERVER['HTTPS']))
+{
+    header ("Location: https://" . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF']);
+}
 
 //创建数据库对象
 $db = new mysqli($config['db_host'],
@@ -44,5 +52,8 @@ $smarty->setConfigDir( ROOT_PATH   .   $config['smarty_config'] );
 $smarty->assign('theme_root', 'templates/default');
 //过滤请求字符串
 
+addslashes_deep($_REQUEST);
+addslashes_deep($_GET);
+addslashes_deep($_POST);
 
 ?>

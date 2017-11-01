@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2017-10-31 18:12:42
+/* Smarty version 3.1.30, created on 2017-11-01 17:36:42
   from "D:\code\project\books\templates\default\dashboard.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_59f8af0a20eb52_27908122',
+  'unifunc' => 'content_59f9f81a0e0e72_78730144',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ec99975d72dd246b4ecb38d6ce872c1106ed71fd' => 
     array (
       0 => 'D:\\code\\project\\books\\templates\\default\\dashboard.html',
-      1 => 1509469952,
+      1 => 1509554199,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_59f8af0a20eb52_27908122 (Smarty_Internal_Template $_smarty_tpl) {
+function content_59f9f81a0e0e72_78730144 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html>
@@ -67,6 +67,8 @@ function content_59f8af0a20eb52_27908122 (Smarty_Internal_Template $_smarty_tpl)
             </li>
           </ul>
           <form class="form-inline mt-2 mt-md-0">
+            <a class="nav-link" href="#"><?php echo $_smarty_tpl->tpl_vars['username']->value;?>
+</a>
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>

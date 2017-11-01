@@ -13,7 +13,8 @@ $config = array(
     'compile_dir'      => 'template_c'            ,
     'cache_dir'        => 'cache'                 ,
     'smarty_config'    => 'smarty_config'         ,
-    'charset'          => 'gbk'
+    'charset'          => 'gbk'                   ,
+    'force_ssl'        =>  true
 );
 
 ?>

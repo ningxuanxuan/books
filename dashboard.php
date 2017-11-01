@@ -5,6 +5,14 @@ define('IN_BOOKS', true);
 require_once 'libs/init.php';
 require_once 'libs/libstat.php';
 
+if( empty($_SESSION['user_id']) )
+{
+    //header("Location: login.php?refer=" . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF']);
+    $target = "login.php?refer=";
+    $target .= empty($_SERVER['HTTPS']) ? "http://" : "https://". $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF']   ;
+    echo "<script type=text/javascript>window.location.href='$target';</script>";
+    exit;
+}
 $act = empty($_REQUEST['act']) ? 'overview' : $_REQUEST['act'];
 $now = time();
 if ($act === 'overview')
@@ -38,6 +46,8 @@ if ($act === 'overview')
     $smarty->assign('earn', $earn);
     $smarty->assign('timestr', date('Y-m', $FirstDay));
     $smarty->assign('title', '统计信息');
+    $smarty->assign('lastip', $_SESSION['last_ip']);
+    $smarty->assign('username', $_SESSION['username']);
     $smarty->display('dashboard.html');
     
 }
