@@ -49,6 +49,7 @@ $smarty->setCompileDir( ROOT_PATH	.	$config['compile_dir'] );
 $smarty->setCacheDir( ROOT_PATH	.	$config['cache_dir'] );
 $smarty->setConfigDir( ROOT_PATH   .   $config['smarty_config'] );
 
+//注册公共变量
 $smarty->assign('theme_root', 'templates/default');
 //过滤请求字符串
 

@@ -69,3 +69,11 @@ function real_ip()
     
     return $realip;
 }
+
+function reg_common_smarty_vars($smarty)
+{
+    if(!empty($_SESSION['username']))
+    {
+        $smarty->assign('username', $_SESSION['username']);
+    }
+}
