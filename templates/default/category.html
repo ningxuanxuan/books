@@ -21,20 +21,62 @@
     <table class="table">
     <thead>
     <tr>
+     <th scope="col">分类</th>
       <th scope="col">分类名</th>
       <th scope="col">说明</th>
-      <th scope="col">上级分类</th>
       <th scope="col">操作</th>
     </tr>
   </thead>
   <tbody>
-    {foreach from=$categories item=cate}
+    {foreach from=$categories.pay item=cate}
+    {foreach from=$cate item=cat}
     <tr>
-      <td>{$cate.name}</th>
-      <td>{$cate.description}</td>
-      <td>{$cate.parent}</td>
-      <td>@mdo</td>
+    <td>{$cat.cat_id}</td>
+    {if $cat.parent == 0 }
+      <td><b>{$cat.name}</b></th>
+    {else}
+      <td>&nbsp;&nbsp;{$cat.name}</th>
+    {/if}
+      <td>{$cat.description}</td>
+      
+      <td>
+      <button><a href="category.php?act=modify&id={$cat.cat_id}">编辑</a></button>
+      <button><a href="category.php?act=delete&id={$cat.cat_id}">删除</a></button>
+      </td>
     </tr>
+    {/foreach}
+    {/foreach}
+  </tbody>
+</table>
+
+    <h1>收入分类</h1>
+    <table class="table">
+    <thead>
+    <tr>
+     <th scope="col">分类id</th>
+      <th scope="col">分类名</th>
+      <th scope="col">说明</th>
+      <th scope="col">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {foreach from=$categories.earn item=cate}
+    {foreach from=$cate item=cat}
+    <tr>
+    <td>{$cat.cat_id}</td>
+    {if $cat.parent == 0 }
+      <td><b>{$cat.name}</b></th>
+    {else}
+      <td>&nbsp;&nbsp;{$cat.name}</th>
+    {/if}
+      <td>{$cat.description}</td>
+      
+      <td>
+      <button><a href="category.php?act=modify&id={$cat.cat_id}">编辑</a></button>
+      <button><a href="category.php?act=delete&id={$cat.cat_id}">删除</a></button>
+      </td>
+    </tr>
+    {/foreach}
     {/foreach}
   </tbody>
 </table>      
