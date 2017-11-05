@@ -2,6 +2,7 @@
 define('IN_BOOKS', true);
 
 require_once 'libs/init.php';
+require_once 'libs/lib_category.php';
 
 //todo:encode
 if( empty($_SESSION['user_id']) || empty($_SESSION['gp_id']) )
@@ -117,7 +118,30 @@ elseif($act == 'modify')
 }
 elseif($act == 'do_modify')
 {
-    echo "modify!";
+    if(!isset($_REQUEST['id']) || !isset($_REQUEST['parent']) || empty($_REQUEST['name'])
+        || !isset($_REQUEST['type']) )
+    {
+        die("invalid param");
+    }
+    
+    $id = intval($_REQUEST['id']);
+    $parent = intval($_REQUEST['parent']);
+    $cat_name = $_REQUEST['name'];
+    $type     = intval($_REQUEST['type']);
+    $desc     = empty($_REQUEST['description']) ? '' : $_REQUEST['description'];
+    
+    if( !CheckCatPrivilege($id, $_SESSION['gp_id']) )
+    {
+        die("privilege error!");
+    }
+
+    if( !UpdateCategory( $id, $cat_name, $type, $parent, $desc) )
+    {
+        echo "<script type=text/javascript>alert('更新失败！');window.history.back(-1);</script>";
+        exit();    
+    }
+    
+    echo "<script type=text/javascript>alert('更新成功！');window.location.href='category.php?act=list';</script>";
     exit();
 }
 elseif($act == 'add')
@@ -166,6 +190,7 @@ elseif($act == 'GetTopCate')
 
 /**
  *return a formated array
+ *
  */
 
 function getCategory($type=0)
