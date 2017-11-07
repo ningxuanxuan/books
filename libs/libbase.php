@@ -77,3 +77,22 @@ function reg_common_smarty_vars($smarty)
         $smarty->assign('username', $_SESSION['username']);
     }
 }
+
+function filter_htmlspecialchars($value)
+{
+    if (empty($value))
+    {
+        return $value;
+    }
+    else
+    {
+        if (!is_array($value))
+        {
+            return htmlspecialchars($value, ENT_COMPAT, "gb2312");
+        }
+        else
+        {
+            return array_map('filter_htmlspecialchars', $value);
+        }
+    }
+}

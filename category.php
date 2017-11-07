@@ -9,6 +9,7 @@ if( empty($_SESSION['user_id']) || empty($_SESSION['gp_id']) )
 {
     $target = "login.php?refer=";
     $target .= empty($_SERVER['HTTPS']) ? "http://" : "https://". $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF']   ;
+    
     echo "<script type=text/javascript>window.location.href='$target';</script>";
     exit;
 }
@@ -19,47 +20,36 @@ $act = empty( $_REQUEST['act'] ) ? 'list' : $_REQUEST['act'];
 
 if($act == 'list')
 {
-    $user_id = $_SESSION['user_id'];
-    $group_id = $_SESSION['gp_id'];
+    $cats = filter_htmlspecialchars(GetCategories(CATEGORY_TYPE_ALL));
+    $categories = array('pay'=>array(), 'earn' => array() );
     
-    
-    $sql = "select * from category where gp_id = $_SESSION[gp_id] "
-        . " and is_delete=0";
-    
-    $result = $db->query( $sql );
-    
-    $categories = array();
-    
-    if( $result = $db->query( $sql ) )
+    foreach ($cats as $cat)
     {
-        while($row = $result->fetch_assoc())
+        if( $cat['type'] == '0' ) //支出
         {
-            if( $row['type'] == '0' ) //支出
+            if($cat['parent'] == 0) //根分类
             {
-                if($row['parent'] == 0) //根分类
-                {
-                    $categories['pay'][$row['cat_id']][] = $row;
-                }
-                else
-                {
-                    $categories['pay'][$row['parent']][] = $row;
-                }
-                
+                $categories['pay'][$cat['cat_id']][] = $cat;
             }
-            else //收入
+            else
             {
-                if($row['parent'] == 0) //根分类
-                {
-                    $categories['earn'][$row['cat_id']][] = $row;
-                }
-                else
-                {
-                    $categories['earn'][$row['parent']][] = $row;
-                }
+                $categories['pay'][$cat['parent']][] = $cat;
             }
-            $categories[] = $row;
+            
+        }
+        else //收入
+        {
+            if($cat['parent'] == 0) //根分类
+            {
+                $categories['earn'][$cat['cat_id']][] = $cat;
+            }
+            else
+            {
+                $categories['earn'][$cat['parent']][] = $cat;
+            }
         }
     }
+    
     
     $smarty->assign('title', '分类管理');
     $smarty->assign('categories', $categories);
@@ -80,11 +70,13 @@ elseif($act == 'modify')
     $sql = "select * from category where cat_id=$id and gp_id=$_SESSION[gp_id]"
         . " and is_delete=0";
     
+    
     if($result = $db->query($sql))
     {
         if( $row = $result->fetch_assoc() )
         {
             //display
+            filter_htmlspecialchars($row);
             $smarty->assign('info', $row);
 
         }
@@ -118,17 +110,23 @@ elseif($act == 'modify')
 }
 elseif($act == 'do_modify')
 {
-    if(!isset($_REQUEST['id']) || !isset($_REQUEST['parent']) || empty($_REQUEST['name'])
-        || !isset($_REQUEST['type']) )
+    if( !isset($_REQUEST['id']) || !isset($_REQUEST['parent'])
+        || !isset($_REQUEST['type']))
     {
-        die("invalid param");
+        echo "<script type=text/javascript>alert('非法请求！');window.history.back(-1);</script>";
+        exit();
     }
+    $id         = intval($_REQUEST['id']);
+    $parent     = intval($_REQUEST['parent']);
+    $cat_name   = empty($_REQUEST['name']) ? '' : $_REQUEST['name'];
+    $type       = intval($_REQUEST['type']);
+    $desc       = empty($_REQUEST['description']) ? '' : $_REQUEST['description'];
     
-    $id = intval($_REQUEST['id']);
-    $parent = intval($_REQUEST['parent']);
-    $cat_name = $_REQUEST['name'];
-    $type     = intval($_REQUEST['type']);
-    $desc     = empty($_REQUEST['description']) ? '' : $_REQUEST['description'];
+    if( empty($cat_name) )
+    {
+        echo "<script type=text/javascript>alert('分类名不能为空');window.history.back(-1);</script>";
+        exit();
+    }
     
     if( !CheckCatPrivilege($id, $_SESSION['gp_id']) )
     {
@@ -146,17 +144,59 @@ elseif($act == 'do_modify')
 }
 elseif($act == 'add')
 {
-    echo "add";
+    $categories = filter_htmlspecialchars(GetCategories(CATEGORY_TYPE_PAY, true));
+    $smarty->assign('root_categories', $categories);
+    $smarty->assign('title', '新增分类');
+    $smarty->assign('act', 'add');
+    $smarty->display('edit_category.html');
     exit();
 }
 elseif($act == 'do_add')
 {
-    echo "do_add";
+    $name = filter_htmlspecialchars( trim($_REQUEST['name']) ) ;
+    $type = intval($_REQUEST['type']);
+    $parent = intval($_REQUEST['parent']); //check
+    $desc   = trim($_REQUEST['description']);
+    
+    if( empty($name) )
+    {
+        echo "<script type=text/javascript>alert('类型名不能为空！');window.history.back(-1);</script>";
+    }
+    
+    if( !CheckCatPrivilege($parent, $_SESSION['gp_id']) )
+    {
+        die("privilege error!");
+    }
+    
+    if( InsertCategory($name, $type, $parent, $desc, $_SESSION['gp_id'], $_SESSION['user_id']))
+    {
+        echo "<script type=text/javascript>alert('新建类型成功！');window.location.href='category.php?act=add';</script>";
+    }
+    else
+    {
+        echo "<script type=text/javascript>alert('新建类型失败！');window.history.back(-1);</script>";
+    }
+    
     exit();
 }
 elseif($act == 'delete')
 {
-    echo "delete";
+    $cat_id = intval($_REQUEST['id']);
+    
+    if( !CheckCatPrivilege($cat_id, $_SESSION['gp_id']) )
+    {
+        die("privilege error!");
+    }
+    
+    if( $result = DeleteCategory($cat_id, $_SESSION['gp_id']) )
+    {
+        echo "<script type=text/javascript>alert('删除类型成功！');window.location.href='category.php';</script>";
+    }   
+    else 
+    {
+        echo "<script type=text/javascript>alert('删除类型失败！');window.history.back(-1);</script>";
+    }
+    
     exit();
 }
 
@@ -166,16 +206,13 @@ elseif($act == 'delete')
 elseif($act == 'GetTopCate')
 {
     $typeid = empty($_REQUEST['type']) ? 0 : intval($_REQUEST['type']);
-    $arrTemp = getCategory($typeid);
+    $arrTemp = GetCategories($typeid, true);
     $arrCate = array();
     foreach($arrTemp as $value)
     {
-        if ($value['parent'] == "0")
-        {
             $arrCate[] = array("cat_id" =>$value['cat_id'],
                 "cat_name" => iconv("GB2312","UTF-8//IGNORE",
                     $value['name']));
-        }
         
     }
     
@@ -186,49 +223,6 @@ elseif($act == 'GetTopCate')
         $json = json_encode($arrCate);
         echo $json;
     }
-}
-
-/**
- *return a formated array
- *
- */
-
-function getCategory($type=0)
-{
-    $ext_type = $type === 0 ? 0 : 1;
-    global $db;
-    $sql = 'select * from category where gp_id='.$_SESSION['gp_id'].' AND is_delete=0 AND type='.$ext_type;
-    $res = array();
     
-    if( $result = $db->query($sql) )
-    {
-        while($row = $result->fetch_assoc())
-        {
-            $res [] = $row;
-        }
-    }
-    
-    $ser_res = $res;
-    $arr = array();
-    foreach($ser_res as $res1)
-    {
-        if($res1['parent'] != 0)
-        {
-            continue;
-        }
-        $arr[]=$res1;
-        foreach($ser_res as $key=>$res2)
-        {
-            if($res2['parent'] === $res1['cat_id'] && $res2['parent'] != 0)
-            {
-                $arr[] = $res2;
-                unset($ser_res[$key]);  //放过子串；
-                
-            }
-        }
-        
-        
-    }
-    
-    return $arr;
+    exit();
 }

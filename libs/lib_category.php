@@ -1,8 +1,19 @@
 <?php
+
+defined('IN_BOOKS') or die("forbidden access!");
+define("CATEGORY_TYPE_PAY", 0);
+define("CATEGORY_TYPE_EARN", 1);
+define("CATEGORY_TYPE_ALL", 2);
+
 function CheckCatPrivilege($cat_id, $gp_id)
 {
+    if( $cat_id == 0 ) //root cat
+    {
+        return true;
+    }
+    
     global $db;
-    $sql = "select count(*) from category where gp_id=$gp_id and cat_id=$cat_id";
+    $sql = "select count(*) from category where gp_id=$gp_id and cat_id=$cat_id and is_delete = 0";
     
     if ( $result = $db->query($sql) )
     {
@@ -21,7 +32,7 @@ function CheckCatPrivilege($cat_id, $gp_id)
 function UpdateCategory( $cat_id, $name, $type, $parent, $desc )
 {
     global $db;
-    $sql = "update category set name=?, type=?, parent=?, description=? where cat_id=?";
+    $sql = "update category set name=?, type=?, parent=?, description=? where cat_id=? and is_delete=0";
     
     if( !$stmt = $db->prepare($sql) )
     {
@@ -61,4 +72,47 @@ function InsertCategory( $name, $type, $parent, $desc, $gp_id, $user_id )
     $stmt->close();
     
     return $result;
+}
+
+function GetCategories($type, $only_root = false)
+{
+    global $db;
+    
+    if($type == CATEGORY_TYPE_PAY || $type == CATEGORY_TYPE_EARN)
+    {
+        $sql = "select cat_id, name, parent, description, type from category where type = $type and gp_id=$_SESSION[gp_id] and is_delete=0";
+    }
+    elseif($type == CATEGORY_TYPE_ALL)
+    {
+        $sql = "select cat_id, name, parent, description, type from category where gp_id=$_SESSION[gp_id] and is_delete=0";
+    }
+    else 
+    {
+        return array();
+    }
+    
+    $categories = array();
+    
+    if($result = $db->query( $sql ))
+    {
+        while( $row = $result->fetch_assoc() )
+        {
+            if( $only_root && $row['parent'] != 0)
+            {
+                continue;
+            }
+            $categories [] = $row;
+        }
+    }
+    
+    return $categories;
+}
+
+function DeleteCategory($cat_id, $gp_id)
+{
+    $sql = "update category set is_delete=1 where (cat_id = $cat_id or parent=$cat_id) and gp_id = $gp_id";
+    
+    global $db;
+    
+    return $db->query($sql);
 }
