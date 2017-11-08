@@ -76,6 +76,9 @@ function reg_common_smarty_vars($smarty)
     {
         $smarty->assign('username', $_SESSION['username']);
     }
+    
+    global $start_time;
+    $smarty->assign('start_time', $start_time);
 }
 
 function filter_htmlspecialchars($value)

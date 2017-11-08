@@ -4,7 +4,7 @@ define('IN_BOOKS', true);
 require_once 'libs/init.php';
 
 $act=empty($_REQUEST['act'])?'show_login':$_REQUEST['act'];
-$refer=empty($_REQUEST['refer']) ? '' : htmlspecialchars($_REQUEST['refer']);
+$refer=empty($_REQUEST['refer']) ? '' : filter_htmlspecialchars($_REQUEST['refer']);
 
 if('show_login'==$act)
 {
@@ -58,7 +58,7 @@ if('check_login'==$act)
     $sql='update user set last_ip=\''.$ip.'\',last_date=\''.$date.'\' where user_id=\''.$_SESSION['user_id'].'\'';
     
     $db->query($sql);
-    $target = empty($refer) ? 'dashboard.php' : $refer;
+    $target = empty($refer) ? 'dashboard.php' : urldecode($refer);
     echo "<script type=text/javascript>window.location.href='$target';</script>";
     exit;
 }

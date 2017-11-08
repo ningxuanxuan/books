@@ -3,7 +3,7 @@
  * 
  * 
  ***********************************************/
-
+$start_time = microtime(true);
 defined('IN_BOOKS') or die('forbidden access!');
 
 //取得当前所在的根目录

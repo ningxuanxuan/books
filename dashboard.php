@@ -7,14 +7,17 @@ require_once 'libs/libstat.php';
 
 if( empty($_SESSION['user_id']) )
 {
-    //header("Location: login.php?refer=" . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF']);
     $target = "login.php?refer=";
-    $target .= empty($_SERVER['HTTPS']) ? "http://" : "https://". $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF']   ;
+    $refer = empty($_SERVER['HTTPS']) ? "http://" : "https://". $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF']   ;
+    $target .= urlencode($refer);
     echo "<script type=text/javascript>window.location.href='$target';</script>";
     exit;
 }
 $act = empty($_REQUEST['act']) ? 'overview' : $_REQUEST['act'];
 $now = time();
+
+reg_common_smarty_vars($smarty);
+
 if ($act === 'overview')
 {
     $FirstDay = GetBeginOfMonth($now);

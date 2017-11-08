@@ -10,25 +10,16 @@ define('IN_BOOKS', true);
 
 require_once('libs/init.php');
 
-if( $result = $db->query("select * from books.admins limit 1") )
+if( empty($_SESSION['user_id']) || empty($_SESSION['gp_id']) )
 {
-    $row = $result->fetch_assoc();
-
-    $smarty->assign('id', $row['id']);
-    $smarty->assign('name', $row['name']);
-    $smarty->assign('passwd', $row['passwd']);
-    $smarty->assign('status', $row['status']);
-    $smarty->assign('last_ip', $row['last_ip']);
-    $smarty->assign('last_time', $row['last_time']);
-}
-else
-{
-    $smarty->assign('id', $db->error);
+    $target = "login.php?refer=";
+    $refer = empty($_SERVER['HTTPS']) ? "http://" : "https://". $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF']   ;
+    $target .= urlencode($refer);
+    echo "<script type=text/javascript>window.location.href='$target';</script>";
+    exit;
 }
 
-$smarty->assign('sitename', 'books');
-$smarty->assign('title', 'welcome to books');
-$smarty->display('index.html');
-
+header("Location:dashboard.php");
+exit();
 
 ?>
