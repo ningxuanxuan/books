@@ -22,12 +22,18 @@ reg_common_smarty_vars($smarty);
 
 if( $act == 'list' )
 {
-    $start_time = GetBeginOfMonth($now);
-    $end_time   = GetEndOfMonth($now);
+    $start_time = empty($_REQUEST['start_time']) ? GetBeginOfMonth($now) : intval($_REQUEST['start_time']);
+    $end_time   = empty($_REQUEST['end_time']) ? GetEndOfMonth($now) : intval(($_REQUEST['end_time'] ));
+    $count_per_page = empty($_REQUEST['$count_per_page']) ? 20 : intval(($_REQUEST['$count_per_page'] ));
+    $current_pos   = empty($_REQUEST['$current_pos']) ? 0 : intval(($_REQUEST['$current_pos'] ));
     
     $cash_stream = GetCashStream($start_time, $end_time, $_SESSION['gp_id']);
     
-    $smarty->assign('cash_stream', $cash_stream);
-    //$smarty->assign('title' '查看流水');
-    print_r($_SERVER);
+    $smarty->assign('cash_stream', $cash_stream['stream']);
+    $smarty->assign('count', $cash_stream['count']);
+    $smarty->assign('count_per_page', $count_per_page);
+    $smarty->assign('current_pos', $current_pos);
+    $smarty->assign('title', '查看流水');   
+    $smarty->display('cash.html');
+    
 }

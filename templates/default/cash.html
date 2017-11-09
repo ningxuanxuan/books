@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="gbk" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="{$theme_root}/css/dashboard.css" />
+    <link rel="stylesheet" type="text/css" href="{$theme_root}/css/common.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>   
+    <script src="{$theme_root}/js/common.js" type="text/javascript" />
+    <title>{$title}</title>
+    {literal}
+    <script type="text/javascript" >
+    function toModify(id)
+    {
+    	window.location.href="category.php?act=modify&id=" + id;
+    }
+    function toDelete(id)
+    {
+    	if( confirm("是否真的要删除？(如果删除根分类会级联删除子分类)") )
+    	{
+    		window.location.href="category.php?act=delete&id=" + id;
+    	}
+    }
+    </script>
+    {/literal}
+</head>
+<body>
+{include file="header.html"}
+<div class="container">
+
+    <h1 class="text-success">收支列表
+    <a class="btn btn-success" href="cash.php?act=add">记一笔</a>
+   
+    </h1>
+    
+    <table class="table small border">
+    <thead>
+    <tr>
+     <th scope="col">记录时间</th>
+      <th scope="col">收支类型</th>
+      <th scope="col">收支分类</th>
+      <th scope="col">说明</th>
+      <th scope="col">记录人</th>
+      <th scope="col">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {if count($cash_stream) == 0}
+        <tr>
+        <td colspan="6">
+                        还没有收入分类哦
+        <a class="btn btn-success center" href="category.php?act=add">新建分类</a>
+        </td>
+        </tr>
+    {else}
+    {foreach from=$cash_stream item=item}
+    
+    <tr>
+    <td>{$item.date}</td>
+    <td>{if $item.type == 0}支出{elseif $item.type == 1}收入{/if}</td>
+    <td>{$item.cat_name}</td>
+    <td>{$item.intro}</td>
+    <td>{$item.username}</td>
+    <td>
+      <button onclick=toModify({$item.id}) class="btn btn-success">编辑</button>
+      <button onclick=toDelete({$item.id}) class="btn btn-success">删除</button>
+    </td>
+    </tr>
+    {/foreach}
+    {/if}
+  </tbody>
+</table>
+    <div> 总条数：{$count} 条， 每页显示{$count_per_page}条，当前第{$current_pos / $count_per_page + 1}页</div>
+
+    </div>
+    
+    {include file="bottom.html"}
+</body>
+
+</html>
