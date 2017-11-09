@@ -8,7 +8,7 @@ require_once 'libs/lib_cash.php';
 if( empty($_SESSION['user_id']) )
 {
     $target = "login.php?refer=";
-    $refer = empty($_SERVER['HTTPS']) ? "http://" : "https://". $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF']   ;
+    $refer = empty($_SERVER['HTTPS']) ? "http://" : "https://". $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']   ;
     $target .= urlencode($refer);
     echo "<script type=text/javascript>window.location.href='$target';</script>";
     exit;
@@ -28,5 +28,6 @@ if( $act == 'list' )
     $cash_stream = GetCashStream($start_time, $end_time, $_SESSION['gp_id']);
     
     $smarty->assign('cash_stream', $cash_stream);
-    $smarty->assign('title' '查看流水');
+    //$smarty->assign('title' '查看流水');
+    print_r($_SERVER);
 }

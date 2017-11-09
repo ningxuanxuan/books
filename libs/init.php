@@ -29,7 +29,7 @@ session_start();
 //SSL 跳转
 if( $config['force_ssl'] && empty($_SERVER['HTTPS']))
 {
-    header ("Location: https://" . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF']);
+    header ("Location: https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 }
 
 //创建数据库对象

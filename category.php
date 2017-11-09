@@ -8,7 +8,7 @@ require_once 'libs/lib_category.php';
 if( empty($_SESSION['user_id']) || empty($_SESSION['gp_id']) )
 {
     $target = "login.php?refer=";
-    $refer = empty($_SERVER['HTTPS']) ? "http://" : "https://". $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF']   ;
+    $refer = empty($_SERVER['HTTPS']) ? "http://" : "https://". $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']   ;
     $target .= urlencode($refer);
     echo "<script type=text/javascript>window.location.href='$target';</script>";
     exit;
