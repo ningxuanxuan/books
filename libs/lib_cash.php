@@ -9,15 +9,15 @@ function GetCashStream($start_time, $end_time, $group, $startpos = 0, $limit = 1
     $sql = "select a.in_id as id, a.date, a.sum, a.intro, a.type, b.name as cat_name, c.username from " .
     " stream as a left join category as b on a.cat_id = b.cat_id " .
     "left join user as c on c.user_id = a.record_person_id  " .
-    "where a.date >= $start_time and a.date < $end_time and a.gp_id = $group " .
+    "where a.date >= $start_time and a.date <= $end_time and a.gp_id = $group " .
     "and a.is_delete=0 limit $startpos, $limit";
     
     $sql_count = "select count(*) from stream as a left join category as b on a.cat_id = b.cat_id " .
         "left join user as c on c.user_id = a.record_person_id  " .
-        "where a.date >= $start_time and a.date < $end_time and a.gp_id = $group " .
-        "and a.is_delete=0 limit $startpos, $limit";
+        "where a.date >= $start_time and a.date <= $end_time and a.gp_id = $group " .
+        "and a.is_delete=0";
     
-    $result = array();
+    $result = array('stream' => array());
     
     if( $qresult = $db->query($sql_count) )
     {

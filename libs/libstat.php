@@ -45,5 +45,5 @@ function GetBeginOfNextMonth($timestamp)
         $year ++;
     }
     
-    return strtotime($year . '-' . $month .'-01');
+    return strtotime($year . '-' . $month .'-01') - 1; //下月第一天减去一秒，以便符合习惯
 }

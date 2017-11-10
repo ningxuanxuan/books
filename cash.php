@@ -24,11 +24,14 @@ if( $act == 'list' )
 {
     $start_time = empty($_REQUEST['start_time']) ? GetBeginOfMonth($now) : intval($_REQUEST['start_time']);
     $end_time   = empty($_REQUEST['end_time']) ? GetEndOfMonth($now) : intval(($_REQUEST['end_time'] ));
-    $count_per_page = empty($_REQUEST['$count_per_page']) ? 20 : intval(($_REQUEST['$count_per_page'] ));
-    $current_pos   = empty($_REQUEST['$current_pos']) ? 0 : intval(($_REQUEST['$current_pos'] ));
+    $count_per_page = empty($_REQUEST['count_per_page']) ? 20 : intval(($_REQUEST['count_per_page'] ));
+    $current_pos   = empty($_REQUEST['current_pos']) ? 0 : intval(($_REQUEST['current_pos'] ));
     
-    $cash_stream = GetCashStream($start_time, $end_time, $_SESSION['gp_id']);
+    $cash_stream = GetCashStream($start_time, $end_time, $_SESSION['gp_id'], $current_pos, $count_per_page);
     
+    $smarty->assign('start_time', $start_time);
+    $smarty->assign('end_time', $end_time);
+    $smarty->assign('cash_stream', $cash_stream['stream']);
     $smarty->assign('cash_stream', $cash_stream['stream']);
     $smarty->assign('count', $cash_stream['count']);
     $smarty->assign('count_per_page', $count_per_page);

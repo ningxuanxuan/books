@@ -13,3 +13,7 @@ h2 {
     margin-bottom: 20px;
     border-bottom: 1px solid #eee;
 }
+
+.form_inline_item {
+	margin-left:30px;
+}

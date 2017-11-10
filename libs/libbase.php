@@ -78,7 +78,7 @@ function reg_common_smarty_vars($smarty)
     }
     
     global $start_time;
-    $smarty->assign('start_time', $start_time);
+    $smarty->assign('script_start_time', $start_time);
 }
 
 function filter_htmlspecialchars($value)
