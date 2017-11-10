@@ -1,6 +1,6 @@
 <?php
 define('IN_BOOKS', true);
-
+ 
 require_once 'libs/init.php';
 require_once 'libs/libstat.php';
 require_once 'libs/lib_cash.php';
