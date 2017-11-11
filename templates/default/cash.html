@@ -30,7 +30,7 @@
         var timestr = document.getElementById("option_start_time_str").value;
         document.getElementById("option_start_time").value = Date.parse(timestr) / 1000;
         timestr = document.getElementById("option_end_time_str").value;
-        document.getElementById("option_end_time").value = Date.parse(timestr) / 1000;
+        document.getElementById("option_end_time").value = Date.parse(timestr) / 1000 + 3600 * 24 - 1;
     	return true;
     }
     
