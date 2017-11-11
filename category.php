@@ -118,7 +118,7 @@ elseif($act == 'do_modify')
     }
     $id         = intval($_REQUEST['id']);
     $parent     = intval($_REQUEST['parent']);
-    $cat_name   = empty($_REQUEST['name']) ? '' : $_REQUEST['name'];
+    $cat_name   = $_REQUEST['name'];
     $type       = intval($_REQUEST['type']);
     $desc       = empty($_REQUEST['description']) ? '' : $_REQUEST['description'];
     
