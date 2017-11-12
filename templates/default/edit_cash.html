@@ -20,12 +20,8 @@
 <div class='container' style="max-width:800px;margin-top:50px">
   <!-- 为了复用html文件，此处根据act做不同展现 -->
   {if $act == 'add'}  
-  <h2>新增分类</h2>     
-  <form action="category.php" method="post">
-  <div class="form-group">
-    <label for="name">分类名</label>
-    <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="请输入分类名" required autofocus>
-  </div>
+  <h2>新增记录</h2> 
+  <form action="cash.php" method="post" onsubmit="beforSubmit()">    
   <div class="form-group">
     <label for="type">类型</label>
     <select class="form-control" id="type" name="type" onchange="getCategory()">
@@ -34,68 +30,104 @@
     </select>
   </div>
   <div class="form-group">
-    <label for="parent">上级分类</label>
-    <select class="form-control" name="parent" id="parent">
-    <option value="0" selected="selected">作为顶级分类</option>
-    {foreach from=$root_categories item=root}
-    {if $root.type == 0}
-        <option value="{$root.cat_id}">{$root.name}</option>
-    {/if}
+    <label for="parent">支出分类</label>
+    <select class="form-control" name="category" id="category">
+    
+    {foreach from=$categories item=cat}
+        {foreach from=$cat item = itm}
+            {if $itm.parent == 0}
+                <option value="{$itm.cat_id}">{$itm.cat_name}</option>
+            {else}
+                <option value="{$itm.cat_id}">&nbsp;&nbsp;{$itm.cat_name}</option>
+            {/if}
+            
+        {/foreach}
     {/foreach}
     </select>
   </div>
+  
   <div class="form-group">
-    <label for="description">描述</label>
-    <textarea class="form-control" id="description" name="description">
+    <label for="name">日期</label>
+    <input type="text" class="form-control" name="date_str" id="date_str"  placeholder="请输入日期" required >
+  </div>
+  
+  <div class="form-group">
+    <label for="sum">金额</label>
+    <input type="text" class="form-control" name="sum" id="sum"  placeholder="请输入金额" required autofocus>
+  </div>
+  
+  <div class="form-group">
+    <label for="name">支付方式</label>
+    <select class="form-control" name="pay_method" id="pay_method">
+    <option value="0">现金</option>
+    <option value="1">信用卡</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="intro">描述</label>
+    <textarea class="form-control" id="intro" name="intro">
     </textarea>
   </div>
-  <input type="hidden" name="act" value="do_add"/>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <input type="hidden" name="act" value="insert"/>
+  <input type="hidden" id ="date" name="date" value="" />
+  <button type="submit" class="btn btn-primary">提交</button>
 </form>
 
   {elseif $act == 'modify'}
   <h2>编辑分类</h2>
-  <form action="category.php" method="post">
-  <div class="form-group">
-    <label for="name">分类名</label>
-    <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="请输入分类名" value="{$info.name}" required autofocus>
-  </div>
+  <form action="cash.php" method="post" onsubmit="beforSubmit()">    
   <div class="form-group">
     <label for="type">类型</label>
     <select class="form-control" id="type" name="type" onchange="getCategory()">
-      <option value="0" {if $info.type == 0}selected="selected" {/if}>支出</option>
-      <option value="1" {if $info.type == 1}selected="selected" {/if}>收入</option>
+      <option value="0" {if $record.type == 0}selected = "selected"{/if}>支出</option>
+      <option value="1" {if $record.type == 1}selected = "selected"{/if}>收入</option>
     </select>
   </div>
   <div class="form-group">
-    <label for="parent">上级分类</label>
-    <select class="form-control" name="parent" id="parent">
-        {if $info.parent == 0}
-            <option value="0" selected="selected">作为顶级分类</option>
-        {else}
-            <option value="0">作为顶级分类</option>
-        {/if}
-    {foreach from=$root_categories item=root}
-    {if $root.type == 0}
-        {if $info.parent == $root.cat_id}
-            <option value="{$root.cat_id}" selected="selected">{$root.name}</option>
-        {else}
-            <option value="{$root.cat_id}">{$root.name}</option>
-        {/if}
-        
-    {/if}
+    <label for="parent">支出分类</label>
+    <select class="form-control" name="category" id="category">
+    
+    {foreach from=$categories item=cat}
+        {foreach from=$cat item = itm}
+            {if $itm.parent == 0}
+                <option value="{$itm.cat_id}" {if $itm.cat_id == $record.id} selected="selected" {/if}>{$itm.cat_name}</option>
+            {else}
+                <option value="{$itm.cat_id}" {if $itm.cat_id == $record.id} selected="selected" {/if}>&nbsp;&nbsp;{$itm.cat_name}</option>
+            {/if}
+            
+        {/foreach}
     {/foreach}
     </select>
   </div>
+  
+  <div class="form-group">
+    <label for="name">日期</label>
+    <input type="text" class="form-control" name="date_str" id="date_str"  placeholder="请输入日期" value={$record.date} required autofocus />
+  </div>
+  
+  <div class="form-group">
+    <label for="sum">金额</label>
+    <input type="text" class="form-control" name="sum" id="sum"  placeholder="请输入金额"  value={$record.sum} required autofocus />
+  </div>
+  
+  <div class="form-group">
+    <label for="pay_method">支付方式</label>
+    <select class="form-control" name="pay_method" id="pay_method">
+    <option value="0" {if $record.pay_method == 0} selected="selected" {/if}>现金</option>
+    <option value="1" {if $record.pay_method == 1} selected="selected" {/if}>信用卡</option>
+    </select>
+  </div>
+  
   <div class="form-group">
     <label for="description">描述</label>
-    <textarea class="form-control" name="description" id="description">
-    {$info.description}
+    <textarea class="form-control" id="description" name="intro">{$record.intro}
     </textarea>
   </div>
-  <input type="hidden" name="act" value="do_modify"/>
-  <input type="hidden" name="id" value="{$info.cat_id}" />
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <input type="hidden" name="act" value="update"/>
+  <input type="hidden" name="id" value="{$record.id}"/>
+  <input type="hidden" id="date" name="date" value="" />
+  <button type="submit" class="btn btn-primary">提交</button>
 </form>
   {/if}
   
@@ -108,20 +140,39 @@
 function getCategory()
     {
         $.post("category.php",
-                {act:"GetTopCate", method:"ajax",
+                {act:"GetCategory", method:"ajax",
                 type:$("#type").val()},
                 function (data, textStatus){
-                    $("#parent").empty();
-                    $("#parent").append("<option value='0'>作为顶级分类</option>");
-                    for(var i=0; i<data.length; i++)
+                    $("#category").empty();
+                    $("#category").append("<option value='0'>作为顶级分类</option>");
+                    
+                    for(var key in data)
                     {
-                        $("#parent").append("<option value='" + data[i].cat_id +"'>" + data[i].cat_name + "</option>");
+                    	for(var i = 0; i <data[key].length; ++i)
+                    	{
+                    		
+                    		if( data[key][i].parent == "0" )
+                            {
+                                $("#category").append("<option value='" + data[key][i].cat_id +"'>" + data[key][i].cat_name + "</option>");
+                            }
+                            else    
+                            {
+                                $("#category").append("<option value='" + data[key][i].cat_id +"'>&nbsp;&nbsp;" + data[key][i].cat_name + "</option>");
+                            }
+                    	}
+                    	
+                        
                     }
                 },"json")
     }
+    
+    function beforSubmit()
+    {
+    	var timestr = document.getElementById("date_str").value;
+        document.getElementById("date").value = Date.parse(timestr) / 1000;
+    }
 </script>
-{/literal}
-  
+{/literal}  
     {include file="bottom.html"}
 </body>
 

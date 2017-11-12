@@ -226,3 +226,40 @@ elseif($act == 'GetTopCate')
     
     exit();
 }
+
+elseif($act == 'GetCategory')
+{
+    $typeid = empty($_REQUEST['type']) ? 0 : intval($_REQUEST['type']);
+    
+    $arrTemp = GetCategories($typeid);
+    
+    $categories = array();
+    
+    foreach ($arrTemp as $cat)
+    {
+            if($cat['parent'] == 0) //¸ù·ÖÀà
+            {
+                $categories[$cat['cat_id']][] = array('cat_id' => $cat['cat_id'], 
+                    'cat_name' => iconv("GB2312","UTF-8//IGNORE", $cat['name']),
+                    'parent' => $cat['parent']);
+            }
+            else
+            {
+                $categories[$cat['parent']][] = array('cat_id' => $cat['cat_id'],
+                    'cat_name' => iconv("GB2312","UTF-8//IGNORE", $cat['name']), 
+                    'parent' => $cat['parent']);
+            }
+            
+    }
+    
+    $request_method = empty($_REQUEST['method']) ? "" : trim($_REQUEST['method']);
+    
+    if ($request_method == "ajax")
+    {
+        header("content-type: application/json; charset=gb2312");
+        $json = json_encode($categories);
+        echo $json;
+    }
+    
+    exit();
+}
