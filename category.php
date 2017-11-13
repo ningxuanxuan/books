@@ -15,6 +15,7 @@ if( empty($_SESSION['user_id']) || empty($_SESSION['gp_id']) )
 }
 
 reg_common_smarty_vars($smarty);
+$smarty->assign('nav_choice', 'nav_category');
 
 $act = empty( $_REQUEST['act'] ) ? 'list' : $_REQUEST['act'];
 

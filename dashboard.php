@@ -17,7 +17,7 @@ $act = empty($_REQUEST['act']) ? 'overview' : $_REQUEST['act'];
 $now = time();
 
 reg_common_smarty_vars($smarty);
-
+$smarty->assign('nav_choice', 'nav_dashboard');
 if ($act === 'overview')
 {
     $FirstDay = GetBeginOfMonth($now);

@@ -19,7 +19,7 @@ $act = empty($_REQUEST['act']) ? 'list' : $_REQUEST['act'];
 $now = time();
 
 reg_common_smarty_vars($smarty);
-
+$smarty->assign('nav_choice', 'nav_cash');
 
 if( $act == 'list' )
 {
