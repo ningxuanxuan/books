@@ -76,7 +76,7 @@ else if ( $act == 'insert' )
     do_CheckCashStreamInsert();
     
 
-    $date = empty($_REQUEST['date']) ? 0 : intval($_REQUEST['date']);
+    $date = empty($_REQUEST['date']) ? time() : intval($_REQUEST['date']);
     $type = empty($_REQUEST['type']) ? 0 : intval($_REQUEST['type']);
     $cat_id = empty($_REQUEST['category']) ? 0 : intval($_REQUEST['category']);
     $sum   = empty($_REQUEST['sum']) ? 0.0 : round(floatval($_REQUEST['sum']), 2);
@@ -169,7 +169,7 @@ else if($act == "update")
     do_CheckCashStreamUpdate();
     
     $id   = empty($_REQUEST['id']) ? 0 : intval($_REQUEST['id']);
-    $date = empty($_REQUEST['date']) ? 0 : intval($_REQUEST['date']);
+    $date = empty($_REQUEST['date']) ? time() : intval($_REQUEST['date']);
     $type = empty($_REQUEST['type']) ? 0 : intval($_REQUEST['type']);
     $cat_id = empty($_REQUEST['category']) ? 0 : intval($_REQUEST['category']);
     $sum   = empty($_REQUEST['sum']) ? 0.0 : round(floatval($_REQUEST['sum']), 2);

@@ -55,8 +55,10 @@ if('check_login'==$act)
     
     $ip=real_ip();
     $date=time();
-    $sql='update user set last_ip=\''.$ip.'\',last_date=\''.$date.'\' where user_id=\''.$_SESSION['user_id'].'\'';
     
+    
+    $sql='update user set last_ip=\''.$ip.'\',last_date=\''.$date.'\' where user_id=\''.$_SESSION['user_id'].'\'';
+        
     $db->query($sql);
     $target = empty($refer) ? 'dashboard.php' : urldecode($refer);
     echo "<script type=text/javascript>window.location.href='$target';</script>";

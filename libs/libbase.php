@@ -14,6 +14,7 @@ function addslashes_deep($value)
 
 function real_ip()
 {
+    $realip = "";
     if (isset($_SERVER))
     {
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
@@ -64,7 +65,7 @@ function real_ip()
         }
     }
     
-    preg_match("/[\d\.]{7,15}/", $realip, $onlineip);
+    preg_match("/[\d\.]{7,15}|[\w\:]{3,39}/", $realip, $onlineip); // add for support ipv6
     $realip = !empty($onlineip[0]) ? $onlineip[0] : '0.0.0.0';
     
     return $realip;
@@ -72,9 +73,11 @@ function real_ip()
 
 function reg_common_smarty_vars($smarty)
 {
-    if(!empty($_SESSION['username']))
+    if(!empty($_SESSION['real_name']))
     {
-        $smarty->assign('username', $_SESSION['username']);
+        $smarty->assign('real_name', $_SESSION['real_name']);
+        $smarty->assign('last_date', $_SESSION['last_date']);
+        $smarty->assign('last_ip', $_SESSION['last_ip']);
     }
     
     global $start_time;

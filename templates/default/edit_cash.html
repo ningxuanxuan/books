@@ -95,11 +95,13 @@ function getCategory()
   <div class="form-group">
     <label for="name">日期</label>
     <input type="text" class="form-control" name="date_str" id="date_str"  placeholder="请输入日期" required >
+    <small  class="form-text text-muted">*请选择或输入日期，留空代表当前时间</small>
   </div>
   
   <div class="form-group">
     <label for="sum">金额</label>
     <input type="text" class="form-control" name="sum" id="sum"  placeholder="请输入金额" required autofocus>
+    <small  class="form-text text-muted">*请输入金额，精确到小数点后两位</small>
   </div>
   
   <div class="form-group">
@@ -150,11 +152,13 @@ function getCategory()
   <div class="form-group">
     <label for="name">日期</label>
     <input type="text" class="form-control" name="date_str" id="date_str"  placeholder="请输入日期" value={$record.date} required />
+    <small  class="form-text text-muted">*请选择或输入日期，留空代表当前时间</small>
   </div>
   
   <div class="form-group">
     <label for="sum">金额</label>
     <input type="text" class="form-control" name="sum" id="sum"  placeholder="请输入金额"  value={$record.sum} required autofocus />
+    <small  class="form-text text-muted">*请输入金额，精确到小数点后两位</small>
   </div>
   
   <div class="form-group">
