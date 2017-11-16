@@ -33,7 +33,8 @@ if( $config['force_ssl'] && empty($_SERVER['HTTPS']))
 }
 
 //创建数据库对象
-$db = new mysqli($config['db_host'],
+require_once(ROOT_PATH . 'libs/lib_mysql.php');
+$db = new cls_mysql($config['db_host'],
                  $config['db_user'],
                  $config['db_passwd'],
                  $config['db_name'],

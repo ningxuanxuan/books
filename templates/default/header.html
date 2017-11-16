@@ -30,6 +30,18 @@
             <li class="nav-item">
               <a class="nav-link" href="#">债务管理</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">控制面板</a>
+            </li>           
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle {if $nav_choice == 'nav_usercenter'}active{/if}" href="usercenter.php" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{$real_name}</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <p class="small">上次登录：<br />{$last_date}<br />
+                                上次登录ip&nbsp;{$last_ip}</p>
+              <a class="dropdown-item " href="usercenter.php">前往用户中心</a>
+              <a class="dropdown-item text-danger" href="login.php?act=logout">注销</a>
+            </div>
+          </li>
           </ul>
 
             <div class="text-white small">欢迎您 <a href="#">{$real_name}</a> 上次登录时间：{$last_date}, 上次登录ip&nbsp;{$last_ip}
