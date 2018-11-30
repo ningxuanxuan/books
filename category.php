@@ -51,7 +51,6 @@ if($act == 'list')
         }
     }
     
-    
     $smarty->assign('title', '分类管理');
     $smarty->assign('categories', $categories);
     $smarty->display('category.html');
