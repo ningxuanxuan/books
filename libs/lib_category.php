@@ -80,11 +80,11 @@ function GetCategories($type, $only_root = false)
     
     if($type == CATEGORY_TYPE_PAY || $type == CATEGORY_TYPE_EARN)
     {
-        $sql = "select a.cat_id, a.name, a.parent, a.description, a.type, b.cost_limit from category as a left join plan as b on a.cat_id = b.cat_id where a.type = $type and a.gp_id=$_SESSION[gp_id] and is_delete=0";
+        $sql = "select a.cat_id, a.name, a.parent, a.description, a.type, b.cost_limit, a.is_delete from category as a left join plan as b on a.cat_id = b.cat_id where a.type = $type and a.gp_id=$_SESSION[gp_id] and a.is_delete=0";
     }
     elseif($type == CATEGORY_TYPE_ALL)
     {
-        $sql = "select a.cat_id, a.name, a.parent, a.description, a.type, b.cost_limit from category as a left join plan as b on a.cat_id = b.cat_id where a.gp_id=$_SESSION[gp_id] and a.is_delete=0";
+        $sql = "select a.cat_id, a.name, a.parent, a.description, a.type, b.cost_limit, a.is_delete from category as a left join plan as b on a.cat_id = b.cat_id where a.gp_id=$_SESSION[gp_id] and a.is_delete=0";
     }
     else 
     {
