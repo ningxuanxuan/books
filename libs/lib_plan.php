@@ -17,7 +17,7 @@ function GetGroupPlans($gp_id)
     a.gp_id,
     b.name,
     SUM(a.`sum`) AS total,
-    c.cost_limit
+    SUM(c.cost_limit) AS cost_limit
 FROM
     stream AS a
 LEFT JOIN plan AS c
@@ -29,7 +29,7 @@ ON
 WHERE
     a.gp_id = $gp_id and a.is_delete = 0 and a.date >= $start and a.date <= $end
 GROUP BY
-    a.cat_id
+    a.cat_id, c.cat_id
 UNION
 SELECT
     a.cat_id,

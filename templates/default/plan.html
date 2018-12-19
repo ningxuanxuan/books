@@ -56,8 +56,8 @@
     {foreach from=$plans item=planlist}
     <tr>
       <td>&nbsp;&nbsp;{$planlist.name}</th>
-      <td>{if $planlist.total == null}0{else} {$planlist.total}{/if}</td>
-      <td>{if $planlist.cost_limit == null} 0 {else} {$planlist.cost_limit}{/if}</td>
+      <td>{if $planlist.total == null}0{else} {$planlist.total|string_format:"%.2f"}{/if}</td>
+      <td>{if $planlist.cost_limit == null} 0 {else} {$planlist.cost_limit|string_format:"%.2f"}{/if}</td>
       <td>
       <button onclick=toModify({$planlist.cat_id}) class="btn btn-success btn-sm">±à¼­</button>
       <button onclick=toDelete({$planlist.cat_id}) class="btn btn-success btn-sm">É¾³ý</button>
