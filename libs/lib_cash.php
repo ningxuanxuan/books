@@ -138,10 +138,14 @@ function InsertCashStream($date, $type, $cat_id, $sum, $pay_method, &$intro, $gp
     if( !$stmt->bind_param('idsiiiii', $date, $sum, $intro, $user_id, $cat_id, $type, $pay_method, $gp_id) )
     {
         echo "Database Error:" . $stmt->error;
+        $stmt->close();
         exit(0);
     }
     
-    $result = $stmt->execute();
+    if( !$result = $stmt->execute() )
+    {
+        echo "Database Error:" . $stmt->error;
+    }
     
     $stmt->close();
     
